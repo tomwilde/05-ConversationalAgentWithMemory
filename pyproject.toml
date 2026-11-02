@@ -1,0 +1,30 @@
+[project]
+name = "conversational-agent-with-memory"
+version = "0.1.0"
+description = "Streamlit personal research assistant with conversational + document memory"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "streamlit>=1.37",
+  "pypdf>=5.0.0",
+  "openai>=1.54.0",
+]
+
+[dependency-groups]
+dev = [
+  "pytest>=8.3.3",
+  "ruff>=0.8.0",
+  "ty>=0.0.1a14",
+]
+
+[tool.pytest.ini_options]
+markers = [
+  "acceptance: end-to-end acceptance behavior",
+]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]

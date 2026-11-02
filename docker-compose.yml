@@ -1,0 +1,37 @@
+services:
+  app:
+    build: .
+    profiles: ["app"]
+    environment:
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+    ports:
+      - "8501:8501"
+    command: ["streamlit", "run", "app.py", "--server.address", "0.0.0.0", "--server.port", "8501"]
+
+  debug:
+    build: .
+    profiles: ["debug"]
+    environment:
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+      PYTHONPATH: /app
+    volumes:
+      - ./:/app
+    ports:
+      - "8501:8501"
+      - "5678:5678"
+    command:
+      [
+        "python",
+        "-m",
+        "debugpy",
+        "--listen",
+        "0.0.0.0:5678",
+        "-m",
+        "streamlit",
+        "run",
+        "app.py",
+        "--server.address",
+        "0.0.0.0",
+        "--server.port",
+        "8501"
+      ]
